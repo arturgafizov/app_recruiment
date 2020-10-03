@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Джуманджи</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+  <header class="container mt-3">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand mr-4" href=" /">Джуманджи</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+        <ul class="navbar-nav col-10">
+          <li class="nav-item">
+            <a class="nav-link" href="/list_vacancies">Вакансии</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/mycompany">Компании</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/about_us">О проекте</a>
+          </li>
+        </ul>
+        {% if current_user.is_authenticated %}
+          <ul class="navbar-nav col-2 justify-content-end">
+            <li class="nav-item active">
+              <div class="btn-group">
+                <button type="button" class="btn dropdown-toggle font-weight-bold" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{ current_user.first_name }}  {{ current_user.last_name }}
+                </button>
+                <div class="dropdown-menu dropdown-menu-right mt-3">
+                  <a href="/profile" class="dropdown-item py-2">Профиль</a>
+                  <a href="/mycompany/myresume" class="dropdown-item py-2">Резюме</a>
+                  <a href="/mycompany" class="dropdown-item py-2">Компания</a>
+                  <a href="/logout" class="dropdown-item py-2">Выйти</a>
+                </div>
+              </div>
+            </li>
+          </ul>
+        {% else %}
+           <ul class="navbar-nav col-2 justify-content-center">
+            <li class="nav-item active">
+              <a href="/login" class="nav-link font-weight-bold">Вход</a>
+            </li>
+           </ul>
+        {% endif %}
+      </div>
+    </nav>
+  </header>
+  {% block container %}
+  <main class="container mt-3">
+    <section>
+      <h1 class="h1 text-center mx-auto mt-4 py-5"><strong>Вакансии для <br>Junior-разработчиков</strong></h1>
+      <div class="row">
+        <div class="col-12 col-md-8 col-lg-6 offset-lg-3 offset-md-2">
+          <form action="search/" class="form-inline mb-3">
+            <div class="form-group col-8 col-md-10 pl-0">
+              <input class="form-control w-100" type="search" placeholder="Найти работу или стажировку" aria-label="Найти работу или стажировку" name="s" >
+            </div>
+            <div class="form-group col-4 col-md-2 pl-0">
+              <button class="btn btn-primary w-100" type="submit">Найти</button>
+            </div>
+          </form>
+          <p>Например:
+            <a href="#" class="text-dark border-bottom border-dark m-1 text-decoration-none">Python</a>
+            <a href="#" class="text-dark border-bottom border-dark m-1 text-decoration-none">Flask</a>
+            <a href="#" class="text-dark border-bottom border-dark m-1 text-decoration-none">Django</a>
+            <a href="#" class="text-dark border-bottom border-dark m-1 text-decoration-none">Парсинг</a>
+            <a href="#" class="text-dark border-bottom border-dark m-1 text-decoration-none">ML</a>
+
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-5 pt-3">
+      <h2 class="h2 font-weight-normal text-center mb-5">Вакансии по рубрикам</h2>
+      <div class="row mb-0">
+        {% for specialty in specialties %}
+          <div class="col-6 col-md-6 col-lg-3">
+            <div class="card pt-4 text-center mb-4">
+              <img class="mx-auto d-block" src="{{ specialty.picture.url }}" width="100" height="60" alt="">
+              <div class="card-body">
+                <p class="card-text mb-2">{{ specialty.title }}</p>
+                <p class="card-text"><a href="/vacancies/{{ specialty.code }}">{{ specialty.vacancies.count }} вакансий</a></p>
+              </div>
+            </div>
+          </div>
+
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="my-5 pt-3">
+      <h2 class="h2 font-weight-normal text-center mb-5">Нам доверяют лучшие компании</h2>
+      <div class="row mb-0">
+      {% for company in companies %}
+        <div class="col-6 col-md-6 col-lg-3">
+          <div class="card pt-4 text-center mb-4">
+            <a href="#" style="max-width: 150px;" class="mx-auto d-block">
+              <img class="mx-auto d-block mw-100" src="{{ company.logo.url }}" alt="">
+            </a>
+            <div class="card-body">
+              <p class="card-text"><a href="company_vacancies/{{ company.id }}">{{ company.name }}</a></p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+      </div>
+    </section>
+  </main>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+{% endblock %}
+</body>
+</html>

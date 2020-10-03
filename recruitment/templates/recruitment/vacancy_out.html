@@ -1,0 +1,41 @@
+{% extends 'index.html' %}
+
+
+{% block container %}
+  <main class="container mt-3 pb-5">
+    <div class="row mt-5">
+      <div class="col-12 col-lg-4">
+        <aside class="pt-4 pb-5 px-5 mb-5 card">
+          <h1 class="h4 pt-2 pb-2">Моя компания</h1>
+          <div class="nav flex-column nav-pills">
+            <a class="nav-link " href="/mycompany">1. Информация о компании</a>
+          <div class="nav flex-column nav-pills">
+            <a class="nav-link active" href="/mycompany/vacancies">2. Вакансии</a>
+          </div>
+          </div>
+        </aside>
+      </div>
+
+          <div class="row mt-8">
+            <div class="col-12 col-lg-12">
+              <aside class="pt-4 pb-5 px-5 mb-8 card">
+
+              <h3> Вакансии </h3>
+                <span class="d-block p-2 bg-success text-white">У вас пока нет вакансий, но вы можете создать первую!</span>
+              <form action="vacancy_edit" target="_blank">
+                  <p></p>
+                   <button class="btn btn-warning " type="submit">Добавить вакансию</button>
+              </form>
+
+              </aside>
+            </div>
+          </div>
+        </main>
+
+
+
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends 'index.html' %}
+
+
+{% block container %}
+  <main class="container mt-3 pb-5">
+    <section class="col-12 col-lg-6 offset-lg-3 mt-5 card">
+      <div class="card-body px-3 pb-4">
+        <h1 class="h4 pt-2 pb-3">Мое резюме</h1>
+        <p class="alert alert-info" role="alert">Ваше резюме обновлено!</p>
+        <form method="post" action="/mycompany/myresume/resume_edit" class="">{% csrf_token %}
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <div class="form-group pb-2">
+                <label class="mb-2 text-dark" for="userName">Имя</label>
+                <input class="form-control" type="text" value="Ильяс" id="userName" name="name">
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="form-group pb-2">
+                <label class="mb-2 text-dark" for="userSurname">Фамилия</label>
+                <input class="form-control" type="text" value="Топорыжкин" id="userSurname" name="surname">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <div class="form-group pb-2">
+                <label class="mb-2 text-dark" for="userReady">Готовность к работе</label>
+                <select class="custom-select mr-sm-2" id="userReady" name="status">
+                {% for res_status in resume_form.status %}
+                    {{ res_status }}
+                {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="form-group pb-2">
+                <label class="mb-2 text-dark" for="userSalary">Ожидаемое вознаграждение</label>
+                <input class="form-control" type="text" value="120 000" id="userSalary" name="salary">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <div class="form-group pb-2">
+                <label class="mb-2 text-dark" for="userSpecialization">Специализация</label>
+                <select class="custom-select mr-sm-2" id="userSpecialization" name="specialty">
+                        {% for specialty in specialties %}
+                          <option >{{ specialty.code }}</option>
+                        {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="form-group pb-2">
+                <label class="mb-2 text-dark" for="userQualification">Квалификация</label>
+                <select class="custom-select mr-sm-2" id="userQualification" name="grade">
+                  {% for res_grade in resume_form.grade %}
+                  {{ res_grade }}
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group pb-2">
+            <label class="mb-2 text-dark" for="userEducation">Образование</label>
+            <textarea class="form-control text-uppercase" rows="4" id="userEducation" name="edication" style="color:#000;"></textarea>
+          </div>
+          <div class="form-group pb-2">
+            <label class="mb-2 text-dark" for="userExperience">Опыт работы</label>
+            <textarea class="form-control" rows="4" id="userExperience" name="experience" style="color:#000;"></textarea>
+          </div>
+          <div class="form-group pb-3">
+            <label class="mb-2 text-dark" for="userPortfolio">Ссылка на портфолио</label>
+            <input class="form-control" type="text" placeholder="http://anylink.github.io" id="userPortfolio" name="portfolio">
+          </div>
+          <div class="form-group">
+            <input type="submit" class="btn btn-info" value="Сохранить">
+          </div>
+        </form>
+      </div>
+    </section>
+      {% if not resume_form.is_valid %}
+         {{ resume_form.errors.as_text }}
+      {% endif %}
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+{% endblock %}
