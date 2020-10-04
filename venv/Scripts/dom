@@ -1,0 +1,7 @@
+#!C:\Mypy\python Jango\app_recruitment\venv\Scripts\python.exe
+
+from domainr import Domain
+
+
+if __name__ == '__main__':
+    Domain().main()

@@ -42,3 +42,4 @@ zope.hookable==5.0.1
 zope.interface==5.1.0
 zope.lifecycleevent==4.3
 zope.proxy==4.3.5
+django-crispy-forms==1.9.2
