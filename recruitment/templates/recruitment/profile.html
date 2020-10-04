@@ -1,0 +1,63 @@
+{% extends 'index.html' %}
+
+
+{% block container %}
+  <main class="container mt-3 pb-5">
+      <div class="row mt-5">
+        <div class="col-12 col-lg-8">
+          <div class="card">
+            <div class="card-body px-4 pb-4">
+              <!-- Tab -->
+              <section class="tab-pane fade show active">
+                <h2 class="h4 pt-2 pb-3">Данные о&nbsp;профиле</h2>
+                <p class="alert alert-info" role="alert">
+                  Данные о профиле обновлены
+                </p>
+                <form method="post"  action="/profile" enctype="multipart/form-data">{% csrf_token %}
+                  <div class="row">
+                    <div class="col-12 col-md-6">
+                      <div class="form-group pb-2">
+                        <label class="mb-2 text-dark" for='profileName'>Твое имя</label>
+                        <input class="form-control" type="text" value="Имя" id='profileName' name="first_name">
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="row">
+                    <div class="col-12 col-md-6">
+                      <div class="form-group pb-2">
+                        <label class="mb-2 text-dark" for='profileMail'>Твоя электронная почта</label>
+                        <input class="form-control" type="text" value="your@mail.com" id='profileMail' name="email">
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <div class="form-group pb-2">
+                        <label class="mb-2 text-dark" for='profileSurname'>Твоя фамилия</label>
+                        <input class="form-control" type="text" value="Фамилия" id='profileSurname' name="last_name">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-label-group">
+                    <p class="text-muted"> Пароль</p>
+                    <input type="password" id="inputPassword" name="password1" class="form-control" required>
+                    <label for="inputPassword"></label>
+                  </div>
+                <div class="form-group">
+                  <input type="submit" class="btn btn-info" value="Сохранить">
+                </div>
+                </form>
+              </section>
+              {% if not form.is_valid %}
+                {{ form.errors.as_text }}
+              {% endif %}
+              <!-- END Tab -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+{% endblock %}

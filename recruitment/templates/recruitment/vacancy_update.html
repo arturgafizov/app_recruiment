@@ -1,0 +1,130 @@
+{% extends 'index.html' %}
+
+
+{% block container %}
+  <main class="container mt-3 pb-5">
+    <div class="row mt-5">
+      <div class="col-12 col-lg-4">
+        <aside class="pt-3 pb-4 px-4 mb-5 card">
+          <h1 class="h4 pt-2 pb-2">Моя компания</h1>
+          <div class="nav flex-column nav-pills">
+            <a class="nav-link" href="/mycompany">1. Информация о&nbsp;компании</a>
+            <a class="nav-link active" href="/mycompany/vacancies">2. Вакансии</a>
+          </div>
+        </aside>
+      </div>
+      <div class="col-12 col-lg-8">
+        <div class="card">
+          <div class="card-body px-4 pb-4 tab-content">
+            <!-- Tab -->
+            <section>
+              <p class="alert alert-info" role="alert">Вакансия обновлена</p>
+              <form method="post" >{% csrf_token %}
+                <div class="row">
+                  <div class="col-12 col-md-6">
+                    <div class="form-group pb-2">
+                      <label class="mb-2 text-dark" for='vacancyTitle'>Название вакансии</label>
+                      <input class="form-control" type="text" value="Staffing Smarter" id="vacancyTitle" name="title">
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <div class="form-group pb-2">
+                      <label class="mb-2 text-dark" for='userSpecialization'>Специализация</label>
+                      <select class="custom-select mr-sm-2" id="userSpecialization" name="specialty">
+                        {% for specialty in specialties %}
+                          <option value="{{ specialty.id }}"> {{ specialty.code }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 col-md-6">
+                    <div class="form-group pb-2">
+                      <label class="mb-2 text-dark" for='vacancySalaryMin'>Зарплата от</label>
+                      <input class="form-control" type="text" value="90 000" id="vacancySalaryMin" name="salary_min">
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <div class="form-group pb-2">
+                      <label class="mb-2" for='vacancySalaryMax'>Зарплата до</label>
+                      <input class="form-control" type="text" value="90 000" id="vacancySalaryMax" name="salary_max">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group pb-2">
+                  <label class="mb-2 text-dark" for='vacancySkills'>Требуемые навыки</label>
+                  <textarea class="form-control" rows="3" id='vacancySkills' name='skills'></textarea>
+                </div>
+                <div class="form-group pb-2">
+                  <label class="mb-2 text-dark" for='vacancyDescription'>Описание вакансии</label>
+                  <textarea class="form-control" rows="13" id='vacancyDescription' name="description" style="color:#000;">Финтех компания входит в международную группу
+
+Мы предлагаем:
+Оформление по ТК РФ
+ДМС со стоматологией
+Достойную зарплату, уровень которой можно обсудить по телефону с рекрутером
+Гибкое начало дня, отдельные дни удаленной работы обсуждаются
+Современный офис
+Демократичную корпоративную культуру
+Работу в команде по Scrum
+                  </textarea>
+                </div>
+                <div class="form-group">
+                  <input type="submit" class="btn btn-info" value="Сохранить">
+                </div>
+                    </section>
+                  </div>
+                </div>
+              {% if not vacancy_form.is_valid %}
+                  {{ vacancy_form.errors.as_text }}
+              {% endif %}
+       <div>
+                <!-- END Vacancy info -->
+                <!-- Applications -->
+                {% for vacancy in vacancies %}
+                  {% if  vacancy.company.owner == request.user %}
+                  <h4 class="h4 pt-2 pb-3">Колличество откликов {{ vacancy.applications.count }}</h4>
+                  <!-- Application 1 -->
+                  {% endif %}
+                {% endfor %}
+              </div>
+              {% for application in applications %}
+                {% if application.vacancy_id == current_vacancy %}
+                  <div class="card mt-4">
+                    <div class="card-body px-4">
+                      <p class="mb-1 font-weight-bold">{{ application.written_username }}</p>
+                      <p class="mb-2"><a href="tel:+79002842324" class="text-dark">+ {{ application.written_phone}}</a></p>
+                      <p class="mb-1">{{ application.written_cover_letter }}</p>
+                    </div>
+                  </div>
+                {% endif %}
+              {% endfor %}
+              <div class="pagination">
+                    {% if applications.has_previous %}
+                        <a href="?page={{ applications.previous_page_number }}">←</a>
+                    {% endif %}
+
+                    {% for num in applications.paginator.page_range %}
+                        {% if num == applications.number %}
+                            <span class="current"><b>{{ num }}</b></span>
+                        {% else %}
+                            <a href="?page={{ num }}"> {{ num }}</a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if vacancy_update.has_next %}
+                        <a href="?page={{ vacancy_update.next_page_number }}">→</a>
+                    {% endif %}
+              </div>
+            </section>
+            <!-- END Tab -->
+          </div>
+        </div>
+      </div>
+
+  </main>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+{% endblock %}

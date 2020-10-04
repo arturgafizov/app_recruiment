@@ -1,0 +1,46 @@
+{% extends 'index.html' %}
+
+
+{% block container %}
+  <main class="container mt-3 pb-5">
+    <div class="row mt-5">
+      <div class="col-12 col-lg-4">
+        <aside class="pt-3 pb-4 px-4 mb-5 card">
+          <h1 class="h4 pt-2 pb-2">Моя вакансия</h1>
+            <a class="nav-link active" href="/mycompany">1. Информация о компании</a>
+          <div class="nav flex-column nav-pills">
+            <a class="nav-link active" href="/mycompany/vacancies">2. Вакансии</a>
+          </div>
+        </aside>
+      </div>
+          <div class="col-12 col-md-4 col-lg-6">
+          {% for vacancy in my_vacancies %}
+               <div class="card mt-4">
+                <div class="card-body px-4">
+                  <div class="row align-items-center">
+                    <div class="col-12 cot-md-8 col-lg-9">
+                        <h5 href="/mycompany/vacancies/{{ vacancy.id }}" class="mr-4">{{ vacancy.title }}</h5><p class="mb-1">
+                        <span class="mr-4">от {{  vacancy.salary_min }}  руб.</span><a href="{{ vacancy.id }}" class="text-info">отклики {{ vacancy.applications.count }} </a>
+                      </p>
+                    </div>
+                    <div class="col-6 col-lg-4 text-dark">
+                      <a href="/mycompany/vacancies/{{ vacancy.id }}" class="btn btn-outline-info">Изменить</a>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+          {% endfor %}
+      <div>
+          <div>
+            <form action="vacancy_edit" target="_blank">
+
+                 <button class="btn btn-warning " type="submit">Добавить вакансию</button>
+            </form>
+          </div>
+      </div>
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+{% endblock %}
