@@ -1,1 +1,1 @@
-web: gunicorn app_recruitment.wsgi
+web:gunicorn app_recruitment.wsgi
