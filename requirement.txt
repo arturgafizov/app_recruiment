@@ -43,7 +43,3 @@ zope.hookable==5.0.1
 zope.interface==5.1.0
 zope.lifecycleevent==4.3
 zope.proxy==4.3.5
-dj-database-url-0.5.0
-django-heroku-0.3.1
-psycopg2-2.8.6
-whitenoise-5.2.0
